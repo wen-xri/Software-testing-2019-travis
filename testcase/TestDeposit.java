@@ -33,13 +33,18 @@ public class TestDeposit {
 	public void test1949To1989() {
 		// 從1949存錢到昭和64, 存198178
 		// 利率都是3%
-		double expected = 0;
+		double expected = (198178 * Math.pow(1 + 0.03, 40));
 
 		// when...
+		when(userA.depositAmount()).thenReturn(198178);
+		when(userA.depositInterest(anyInt())).thenReturn(0.03);
+		when(userA.expireEra()).thenReturn("昭和");
+		when(userA.expireYear()).thenReturn(64);
+
 
 		Deposit deposit = new Deposit(1949);
 		String result = deposit.deposit(userA);
-		assertEquals("平成1年: " + (int) expected, result);
+		assertEquals("昭和64年: " + (int) expected, result);
 	}
 
 	@Test
